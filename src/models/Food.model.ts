@@ -2,20 +2,20 @@ import { model, Schema } from "mongoose";
 import { IFood } from "../interfaces/Food.interface";
 
 const foodSchema = new Schema<IFood>({
-  name: {
+  foodItemName: {
     type: String,
     trim: true,
     required: [true, "Food name is required"],
   },
-  thumbnails: {
+  foodImages: {
     type: [String],
     required: [true, "Food thumbnails are required"],
   },
-  description: {
+  foodDescription: {
     type: String,
     required: [true, "Food description is required"],
   },
-  price_per_unit: {
+  foodPricePerUnit: {
     type: Number,
     required: [true, "Food price is required"],
   },
