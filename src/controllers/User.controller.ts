@@ -2,6 +2,7 @@ import { compare, hash } from "bcrypt";
 import { Request, Response } from "express";
 import { UserModel } from "../models/User.model";
 import { sign } from "jsonwebtoken";
+import { IAuthRequest } from "../interfaces/AuthRequest.interface";
 
 ///register user
 export const createUser = async (req: Request, res: Response) => {
@@ -62,4 +63,9 @@ export const login = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).send({ message: "User can't login" });
   }
+};
+
+//get logged-in user info
+export const getLoggedInUserInfo = (req: IAuthRequest, res: Response) => {
+  res.send(req.user);
 };
