@@ -11,6 +11,10 @@ const restaurantSchema = new Schema<IRestaurant>(
       type: String,
       required: [true, "Restaurant logo is reuired"],
     },
+    restaurantAdrress: {
+      type: String,
+      required: [true, "Restaurant address is reuired"],
+    },
     restaurantReview: {
       type: String,
       required: [true, "Restaurant review is reuired"],
