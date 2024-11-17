@@ -5,12 +5,25 @@ import {
   getFoodCategoryById,
   updateFoodCategory,
 } from "../controllers/FoodCategory.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { authenticateFor } from "../middlewares/roleBaseAuth.middleware";
 
 const foodCategoryRouter = Router();
 
-foodCategoryRouter.post("/create-food-category", createFoodCategory);
 foodCategoryRouter.get("/all-food-categories", getAllFoodCategories);
 foodCategoryRouter.get("/food-category/:id", getFoodCategoryById);
-foodCategoryRouter.put("/update-food-category/:id", updateFoodCategory);
+
+foodCategoryRouter.post(
+  "/create-food-category",
+  authMiddleware,
+  authenticateFor("owner"),
+  createFoodCategory
+);
+foodCategoryRouter.put(
+  "/update-food-category/:id",
+  authMiddleware,
+  authenticateFor("owner"),
+  updateFoodCategory
+);
 
 export default foodCategoryRouter;

@@ -6,13 +6,28 @@ import {
   getRestaurantById,
   updateRestaurant,
 } from "../controllers/Restaurant.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { authenticateFor } from "../middlewares/roleBaseAuth.middleware";
 
 const restaurantRouter = Router();
 
-restaurantRouter.post("/create-restaurant", createRestaurant);
 restaurantRouter.get("/all-restaurants", getAllRestaurants);
 restaurantRouter.get("/restaurant", getRestaurantById);
-restaurantRouter.put("/update-restaurant/:id", updateRestaurant);
-restaurantRouter.put("/delete-restaurant/:id", deleteRestaurant);
+
+restaurantRouter.post("/create-restaurant", authMiddleware, createRestaurant);
+
+restaurantRouter.put(
+  "/update-restaurant/:id",
+  authMiddleware,
+  authenticateFor("owner"),
+  updateRestaurant
+);
+
+restaurantRouter.put(
+  "/delete-restaurant/:id",
+  authMiddleware,
+  authenticateFor("owner"),
+  deleteRestaurant
+);
 
 export default restaurantRouter;

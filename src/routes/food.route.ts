@@ -11,17 +11,29 @@ import { authenticateFor } from "../middlewares/roleBaseAuth.middleware";
 
 const foodRouter = Router();
 
-foodRouter.post("/add-food-item", createFoodItem);
 foodRouter.get("/all-food-items", getAllFoodItems);
 foodRouter.get("/food-item/:id", getFoodItemById);
-foodRouter.get(
-  "/allFoodItemsByRestaurantId",
+foodRouter.get("/allFoodItemsByRestaurantId", getAllFoodItemsByRestaurantId);
+
+foodRouter.post(
+  "/add-food-item",
   authMiddleware,
-  authenticateFor("user"),
-  getAllFoodItemsByRestaurantId
+  authenticateFor("owner"),
+  createFoodItem
 );
-foodRouter.put("/update-food-item/:id",  authMiddleware,
-  authenticateFor("owner"), updateFoodItem);
-foodRouter.delete("/delete-food-item/:id", updateFoodItem);
+
+foodRouter.put(
+  "/update-food-item/:id",
+  authMiddleware,
+  authenticateFor("owner"),
+  updateFoodItem
+);
+
+foodRouter.delete(
+  "/delete-food-item/:id",
+  authMiddleware,
+  authenticateFor("owner"),
+  updateFoodItem
+);
 
 export default foodRouter;
