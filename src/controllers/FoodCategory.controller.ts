@@ -54,3 +54,31 @@ export const getFoodCategoryById = async (req: Request, res: Response) => {
     res.status(500).send({ message: "Error retrieving category", error: err });
   }
 };
+
+
+// Update a food category by ID
+export const updateFoodCategory = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const { categoryName, categoryThumbnail } = req.body;
+  
+      const updatedCategory = await FoodCategoryModel.findByIdAndUpdate(
+        id,
+        { categoryName, categoryThumbnail },
+        { new: true, runValidators: true }
+      );
+  
+      if (!updatedCategory) {
+        res.status(404).send({ message: "Food category is not found" });
+        return;
+      }
+  
+      res.status(200).send({
+        message: "Category updated successfully",
+        category: updatedCategory,
+      });
+    } catch (err) {
+      res.status(500).send({ message: "Error updating category", error: err });
+    }
+  };
+  
