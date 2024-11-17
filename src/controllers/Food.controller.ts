@@ -81,13 +81,28 @@ export const updateFoodItem = async (req: Request, res: Response) => {
       return;
     }
 
-    res
-      .status(200)
-      .send({
-        message: "Food item updated successfully",
-        response: updatedFood,
-      });
+    res.status(200).send({
+      message: "Food item updated successfully",
+    });
   } catch (err) {
     res.status(500).send({ message: "Error updating food item", error: err });
+  }
+};
+
+// Delete a food item by ID
+export const deleteFoodItem = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const deletedFood = await FoodModel.findByIdAndDelete(id);
+
+    if (!deletedFood) {
+      res.status(404).send({ message: "Food item is not found" });
+      return;
+    }
+
+    res.status(200).send({ message: "Food item deleted successfully" });
+  } catch (err) {
+    res.status(500).send({ message: "Error deleting food item", error: err });
   }
 };
