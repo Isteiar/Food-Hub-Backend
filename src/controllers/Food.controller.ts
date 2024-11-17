@@ -1,13 +1,13 @@
-//create a new food item
-
 import { Request, response, Response } from "express";
 import { FoodModel } from "../models/Food.model";
 
+//create a new food item
 export const createFoodItem = async (req: Request, res: Response) => {
   try {
     const { foodItemName, foodImages, foodDescription, foodPricePerUnit } =
       req.body;
-    const newFood = await FoodModel.create({
+
+    await FoodModel.create({
       foodItemName,
       foodImages,
       foodDescription,

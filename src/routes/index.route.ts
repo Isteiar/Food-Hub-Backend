@@ -6,6 +6,7 @@ const router = Router();
 
 router.use("/user", userRouter);
 router.use("/foods", foodRouter);
+router.use("/food-categories", foodRouter);
 router.use("/restaurants");
 router.use("/orders");
 
