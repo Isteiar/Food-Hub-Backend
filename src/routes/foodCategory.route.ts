@@ -1,6 +1,12 @@
 import { Router } from "express";
-import { createFoodCategory } from "../controllers/FoodCategory.controller";
+import {
+  createFoodCategory,
+  getAllFoodCategories,
+} from "../controllers/FoodCategory.controller";
 
-const foodCategory = Router();
+const foodCategoryRouter = Router();
 
-foodCategory.post("/create-food-category", createFoodCategory);
+foodCategoryRouter.post("/create-food-category", createFoodCategory);
+foodCategoryRouter.get("/all-food-categories", getAllFoodCategories);
+
+export default foodCategoryRouter;

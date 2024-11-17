@@ -10,6 +10,28 @@ export const createFoodCategory = async (req: Request, res: Response) => {
 
     res.status(201).send({ message: "New food category is created" });
   } catch (err) {
-    res.status(500).send({ message: "Could not create food category", error: err });
+    res
+      .status(500)
+      .send({ message: "Could not create food category", error: err });
+  }
+};
+
+// Get all food categories
+export const getAllFoodCategories = async (req: Request, res: Response) => {
+  try {
+    const allFoodCategories = await FoodCategoryModel.find();
+    if (!allFoodCategories) {
+      res.status(404).send({ message: "Food categories are not found" });
+      return;
+    }
+
+    res.status(200).send({
+      message: "Categories retrieved successfully",
+      response: allFoodCategories,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving categories", error: err });
   }
 };
