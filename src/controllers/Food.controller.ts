@@ -24,6 +24,12 @@ export const createFoodItem = async (req: Request, res: Response) => {
 export const getAllFoodItems = async (req: Request, res: Response) => {
   try {
     const allFoodItems = await FoodModel.find();
+
+    if (!allFoodItems) {
+      res.status(404).send({ message: "Food items are not found" });
+      return;
+    }
+
     res.status(201).send({
       message: "Food items retrieved successfully",
       response: allFoodItems,
@@ -31,6 +37,27 @@ export const getAllFoodItems = async (req: Request, res: Response) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Error retrieving food items", error: err });
+      .send({ message: "Error retrieving food items", error: err });
+  }
+};
+
+// Get a single food item by ID
+export const getFoodItemById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const foodItem = await FoodModel.findById(id);
+
+    if (!foodItem) {
+        res.status(404).send({ message: "Food item is not found" });
+      return;
+    }
+
+    res.status(201).send({
+      message: "Food item retrieved successfully",
+      response: foodItem,
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Error retrieving food item", error: err });
   }
 };

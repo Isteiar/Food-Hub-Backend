@@ -5,8 +5,8 @@ import foodRouter from "./food.route";
 const router = Router();
 
 router.use("/user", userRouter);
-router.use("/food", foodRouter);
-router.use("/restaurant");
-router.use("/order");
+router.use("/foods", foodRouter);
+router.use("/restaurants");
+router.use("/orders");
 
 export default router;
