@@ -27,6 +27,27 @@ export const createFoodItem = async (req: Request, res: Response) => {
   }
 };
 
+//get all foods by restaurant id
+export const getAllFoodItemsByRestaurantId = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { restaurantId } = req.body;
+
+    const allFoodItems = await FoodModel.find({ restaurantId });
+
+    res.send({
+      message: "Foods retrieved successfully",
+      response: allFoodItems,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving restaurants", error: err });
+  }
+};
+
 //get all food items
 export const getAllFoodItems = async (req: Request, res: Response) => {
   try {

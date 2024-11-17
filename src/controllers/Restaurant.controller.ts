@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { RestaurantModel } from "../models/Restaurant.model";
+import { FoodModel } from "../models/Food.model";
 
 // Create a new restaurant
 export const createRestaurant = async (req: Request, res: Response) => {
@@ -27,6 +28,8 @@ export const createRestaurant = async (req: Request, res: Response) => {
     res.status(500).send({ message: "Error creating restaurant", error: err });
   }
 };
+
+
 
 // Get all restaurants
 export const getAllRestaurants = async (req: Request, res: Response) => {
