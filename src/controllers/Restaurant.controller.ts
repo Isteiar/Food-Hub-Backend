@@ -46,3 +46,27 @@ export const getAllRestaurants = async (_req: Request, res: Response) => {
       .send({ message: "Error retrieving restaurants", error: err });
   }
 };
+
+// Get a single restaurant by ID
+export const getRestaurantById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const restaurant = await RestaurantModel.findById(id).populate("ownerId");
+
+    if (!restaurant) {
+      res.status(404).send({ message: "Restaurant not found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .send({
+        message: "Restaurant retrieved successfully",
+        response: restaurant,
+      });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving restaurant", error: err });
+  }
+};
