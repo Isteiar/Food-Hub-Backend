@@ -4,14 +4,21 @@ import { FoodModel } from "../models/Food.model";
 //create a new food item
 export const createFoodItem = async (req: Request, res: Response) => {
   try {
-    const { foodItemName, foodImages, foodDescription, foodPricePerUnit } =
-      req.body;
+    const {
+      foodItemName,
+      foodImages,
+      foodDescription,
+      foodPricePerUnit,
+      restaurantId,
+    } = req.body;
+
 
     await FoodModel.create({
       foodItemName,
       foodImages,
       foodDescription,
       foodPricePerUnit,
+      restaurantId,
     });
 
     res.status(201).send({ message: "New food item is created" });

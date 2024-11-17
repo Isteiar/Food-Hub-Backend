@@ -4,7 +4,6 @@ export interface IRestaurant extends Document {
   restaurantName: string;
   restaurantLogo: string;
   restaurantAdrress: string;
-  restaurantReview?: string;
   restaurantRating: number;
   ownerId: Types.ObjectId;
 }

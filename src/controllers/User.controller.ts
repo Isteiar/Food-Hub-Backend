@@ -6,7 +6,7 @@ import { IAuthRequest } from "../interfaces/AuthRequest.interface";
 
 ///register user
 export const createUser = async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   try {
     //check if email is already exists or not!
@@ -26,6 +26,7 @@ export const createUser = async (req: Request, res: Response) => {
       username,
       email,
       password: hashPassword,
+      role,
     });
 
     res.status(201).send({ message: "New user is created", response: newUser });
@@ -37,7 +38,6 @@ export const createUser = async (req: Request, res: Response) => {
 //login user
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
   try {
     //find the user is exist or not!
     const user = await UserModel.findOne({ email });
@@ -61,7 +61,7 @@ export const login = async (req: Request, res: Response) => {
       .status(200)
       .send({ message: "User is logged-in", access_token: accessToken });
   } catch (err) {
-    res.status(500).send({ message: "User can't login" });
+    res.status(500).send({ message: "User can't login", error: err });
   }
 };
 
@@ -69,4 +69,3 @@ export const login = async (req: Request, res: Response) => {
 export const getLoggedInUserInfo = (req: IAuthRequest, res: Response) => {
   res.send(req.user);
 };
- 

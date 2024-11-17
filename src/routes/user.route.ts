@@ -8,7 +8,7 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 
 const userRouter = Router();
 
-userRouter.post("/resgister", createUser);
+userRouter.post("/register", createUser);
 userRouter.post("/login", login);
 
 userRouter.get("/logged-in-user", authMiddleware, getLoggedInUserInfo);

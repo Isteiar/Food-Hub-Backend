@@ -29,7 +29,7 @@ export const createRestaurant = async (req: Request, res: Response) => {
 };
 
 // Get all restaurants
-export const getAllRestaurants = async (_req: Request, res: Response) => {
+export const getAllRestaurants = async (req: Request, res: Response) => {
   try {
     const restaurants = await RestaurantModel.find().populate("ownerId");
 
