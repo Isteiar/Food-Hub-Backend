@@ -58,15 +58,51 @@ export const getRestaurantById = async (req: Request, res: Response) => {
       return;
     }
 
-    res
-      .status(200)
-      .send({
-        message: "Restaurant retrieved successfully",
-        response: restaurant,
-      });
+    res.status(200).send({
+      message: "Restaurant retrieved successfully",
+      response: restaurant,
+    });
   } catch (err) {
     res
       .status(500)
       .send({ message: "Error retrieving restaurant", error: err });
+  }
+};
+
+// Update a restaurant by ID
+export const updateRestaurant = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const {
+      restaurantName,
+      restaurantLogo,
+      restaurantAdrress,
+      restaurantReview,
+      restaurantRating,
+    } = req.body;
+
+    const updatedRestaurant = await RestaurantModel.findByIdAndUpdate(
+      id,
+      {
+        restaurantName,
+        restaurantLogo,
+        restaurantAdrress,
+        restaurantReview,
+        restaurantRating,
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedRestaurant) {
+      res.status(404).send({ message: "Restaurant not found" });
+      return;
+    }
+
+    res.status(200).send({
+      message: "Restaurant updated successfully",
+      response: updatedRestaurant,
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Error updating restaurant", error: err });
   }
 };
