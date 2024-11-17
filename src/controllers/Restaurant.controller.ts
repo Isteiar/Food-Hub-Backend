@@ -106,3 +106,24 @@ export const updateRestaurant = async (req: Request, res: Response) => {
     res.status(500).send({ message: "Error updating restaurant", error: err });
   }
 };
+
+// Delete a restaurant by ID
+export const deleteRestaurant = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const deletedRestaurant = await RestaurantModel.findByIdAndDelete(id);
+
+    if (!deletedRestaurant) {
+      res.status(404).send({ message: "Restaurant not found" });
+      return;
+    }
+
+    res.status(200).send({
+      message: "Restaurant deleted successfully",
+      restaurant: deletedRestaurant,
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Error deleting restaurant", error: err });
+  }
+};
