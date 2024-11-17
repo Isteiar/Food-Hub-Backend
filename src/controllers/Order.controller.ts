@@ -45,6 +45,7 @@ export const getOrderById = async (req: Request, res: Response) => {
 
     if (!order) {
       res.status(404).send({ message: "Order is not found" });
+      return;
     }
 
     res
@@ -52,5 +53,30 @@ export const getOrderById = async (req: Request, res: Response) => {
       .send({ message: "Order retrieved successfully", response: order });
   } catch (err) {
     res.status(500).send({ message: "Error retrieving order", error: err });
+  }
+};
+
+// Update an order by ID
+export const updateOrder = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { orderItem, orderUnit, orderRating, orderReview } = req.body;
+
+    const updatedOrder = await OrderModel.findByIdAndUpdate(
+      id,
+      { orderItem, orderUnit, orderRating, orderReview },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedOrder) {
+      res.status(404).send({ message: "Order is not found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .send({ message: "Order updated successfully", response: updatedOrder });
+  } catch (err) {
+    res.status(500).send({ message: "Error updating order", error: err });
   }
 };
