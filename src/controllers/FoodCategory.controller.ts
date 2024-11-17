@@ -35,3 +35,22 @@ export const getAllFoodCategories = async (req: Request, res: Response) => {
       .send({ message: "Error retrieving categories", error: err });
   }
 };
+
+// Get a single food category by ID
+export const getFoodCategoryById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const category = await FoodCategoryModel.findById(id);
+
+    if (!category) {
+      res.status(404).send({ message: "Category not found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .send({ message: "Category retrieved successfully", response: category });
+  } catch (err) {
+    res.status(500).send({ message: "Error retrieving category", error: err });
+  }
+};
