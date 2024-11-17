@@ -10,11 +10,29 @@ export const createOrder = async (req: Request, res: Response) => {
       orderItem,
       orderUnit,
       orderRating,
-      orderReview
+      orderReview,
     });
 
     res.status(201).send({ message: "Order created successfully" });
   } catch (err) {
-    res.status(500).send({ message: "Error creating order", error:err });
+    res.status(500).send({ message: "Error creating order", error: err });
+  }
+};
+
+// Get all orders
+export const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const allOrders = await OrderModel.find().populate("orderItem");
+
+    if (!allOrders) {
+      res.status(404).send({ message: "Order is not found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .send({ message: "Orders retrieved successfully", response: allOrders });
+  } catch (err) {
+    res.status(500).send({ message: "Error retrieving orders", error: err });
   }
 };
