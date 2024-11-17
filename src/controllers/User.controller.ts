@@ -69,3 +69,4 @@ export const login = async (req: Request, res: Response) => {
 export const getLoggedInUserInfo = (req: IAuthRequest, res: Response) => {
   res.send(req.user);
 };
+ 
