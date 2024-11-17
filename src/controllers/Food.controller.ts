@@ -49,7 +49,7 @@ export const getFoodItemById = async (req: Request, res: Response) => {
     const foodItem = await FoodModel.findById(id);
 
     if (!foodItem) {
-        res.status(404).send({ message: "Food item is not found" });
+      res.status(404).send({ message: "Food item is not found" });
       return;
     }
 
@@ -59,5 +59,35 @@ export const getFoodItemById = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.status(500).send({ message: "Error retrieving food item", error: err });
+  }
+};
+
+// Update a food item by ID
+export const updateFoodItem = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { foodItemName, foodImages, foodDescription, foodPricePerUnit } =
+      req.body;
+
+    const updatedFood = await FoodModel.findByIdAndUpdate(id, {
+      foodItemName,
+      foodImages,
+      foodDescription,
+      foodPricePerUnit,
+    });
+
+    if (!updatedFood) {
+      res.status(404).send({ message: "Food item is not found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .send({
+        message: "Food item updated successfully",
+        response: updatedFood,
+      });
+  } catch (err) {
+    res.status(500).send({ message: "Error updating food item", error: err });
   }
 };
