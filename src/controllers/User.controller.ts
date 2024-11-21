@@ -37,7 +37,8 @@ export const createUser = async (req: Request, res: Response) => {
 
 //login user
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
+  console.log(req.body);
   try {
     //find the user is exist or not!
     const user = await UserModel.findOne({ email });
@@ -51,6 +52,12 @@ export const login = async (req: Request, res: Response) => {
 
     if (!validPassword) {
       res.status(401).send({ message: "Invalid password" });
+      return;
+    }
+
+    // Verify the role
+    if (user.role !== role) {
+      res.status(403).send({ message: "Unauthorized role" });
       return;
     }
 
